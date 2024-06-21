@@ -38,7 +38,7 @@
 
 static uint16_t framebuffer[WIDTH * HEIGHT];
 static uint16_t compress_buf[WIDTH * HEIGHT];
-
+// candidate for removal - see later comments
 static uint16_t buffer_test[WIDTH * HEIGHT];
 
 static bool display_enabled;
@@ -137,6 +137,10 @@ static int set_buffer(const struct gud_display *disp, const struct gud_set_buffe
     return 0;
 }
 
+// begin potentially removable chunk of code - these modes aren't enabled
+// these functions are also not present in the other example
+// "dst" is buffer_test, this code is the only place it's used
+// seems unreachable without modification
 static size_t r1_to_rgb565(uint16_t *dst, uint8_t *src, uint16_t src_width, uint16_t src_height)
 {
     uint8_t val = 0;
@@ -173,6 +177,7 @@ static size_t rgb111_to_rgb565(uint16_t *dst, uint8_t *src, uint16_t src_width, 
 
    return len;
 }
+// end potentially removable chunk of code
 
 static void write_buffer(const struct gud_display *disp, const struct gud_set_buffer_req *set_buf, void *buf)
 {
@@ -181,6 +186,8 @@ static void write_buffer(const struct gud_display *disp, const struct gud_set_bu
     LOG2("%s: x=%u y=%u width=%u height=%u length=%u compression=0x%x\n", __func__,
          set_buf->x, set_buf->y, set_buf->width, set_buf->height, set_buf->length, set_buf->compression);
 
+    // this is the only actual place where buffer_test can possibly be reached
+    // other display formats are commented out and pixel_formats is hardcoded
     if (disp->formats[0] == GUD_PIXEL_FORMAT_R1) {
         length = r1_to_rgb565(buffer_test, buf, set_buf->width, set_buf->height);
         buf = buffer_test;
@@ -188,6 +195,7 @@ static void write_buffer(const struct gud_display *disp, const struct gud_set_bu
         length = rgb111_to_rgb565(buffer_test, buf, set_buf->width, set_buf->height);
         buf = buffer_test;
     }
+    //*/
 
     mipi_dbi_update16(&dbi, set_buf->x + 40, set_buf->y + 53, set_buf->width, set_buf->height, buf, length);
 
