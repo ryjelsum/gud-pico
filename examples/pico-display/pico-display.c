@@ -208,9 +208,10 @@ static void write_buffer(const struct gud_display *disp, const struct gud_set_bu
         buf = buffer_test;
     }
     */
-
-    mipi_dbi_update16(&dbi, set_buf->x + 40, set_buf->y + 53, set_buf->width, set_buf->height, buf, length);
-
+    // there were some magic values removed here
+    // i believe this is accounting for the weird resolution of the display
+    // before: mipi_dbi_update16(&dbi, set_buf->x + 40, set_buf->y + 53, set_buf->width, set_buf->height, buf, length);
+    mipi_dbi_update16(&dbi, set_buf->x, set_buf->y, set_buf->width, set_buf->height, buf, length);
     if (LED_ACTION == 1)
         board_led_write(true);
     else if (LED_ACTION == 2)
