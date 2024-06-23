@@ -49,6 +49,9 @@ static const struct mipi_dbi dbi = {
     // cpol and cpha are 'clock polarity' and 'clock phase'
     // changing these is necessary for some SPI displays to work
     // if your display does not work try changing these
+    // namely, if your display works with arduino-pico with SPI_MODE3
+    // (for example, passed to the init func of the ST77xx adafruit arduino lib)
+    // that corresponds with .cpol = 1 and .cpha = 1
     .cpol = 1,
     .cpha = 1,
     .sck = 18,
