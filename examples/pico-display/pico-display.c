@@ -46,6 +46,8 @@ static uint64_t panic_reboot_blink_time;
 
 static const struct mipi_dbi dbi = {
     .spi = spi0,
+    //.cpol = 0, // assumed default values, may need to be changed
+    //.cpha = 0,
     .sck = 18,
     .mosi = 19,
     .cs = 17,
