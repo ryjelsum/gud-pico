@@ -49,9 +49,9 @@ static const struct mipi_dbi dbi = {
     // cpol and cpha are 'clock polarity' and 'clock phase'
     // changing these is necessary for some SPI displays to work
     // if your display does not work try changing these
-    // namely, if your display works with arduino-pico with SPI_MODE3
-    // (for example, passed to the init func of the ST77xx adafruit arduino lib)
-    // that corresponds with .cpol = 1 and .cpha = 1
+    // mine is a st7789 display with buttons integrated
+    // it requires SPI_MODE3 to work with the adafruit st7789 arduino library
+    // this corresponds to the settings:
     .cpol = 1,
     .cpha = 1,
     .sck = 18,
@@ -209,7 +209,7 @@ static void write_buffer(const struct gud_display *disp, const struct gud_set_bu
     }
     */
     // there were some magic values removed here
-    // i believe this is accounting for the weird resolution of the display
+    // i believe this is accounting for the weird resolution of the display used in the original example
     // before: mipi_dbi_update16(&dbi, set_buf->x + 40, set_buf->y + 53, set_buf->width, set_buf->height, buf, length);
     mipi_dbi_update16(&dbi, set_buf->x, set_buf->y, set_buf->width, set_buf->height, buf, length);
     if (LED_ACTION == 1)
