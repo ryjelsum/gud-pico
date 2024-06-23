@@ -51,9 +51,9 @@ static const struct mipi_dbi dbi = {
     // if your display does not work try changing these
     // mine is a st7789 display with buttons integrated
     // it requires SPI_MODE3 to work with the adafruit st7789 arduino library
-    // this corresponds to the settings:
-    .cpol = 1,
-    .cpha = 1,
+    // this corresponds to these settings (default is 0):
+    //.cpol = 1,
+    //.cpha = 1,
     .sck = 18,
     .mosi = 19,
     .cs = 17,
