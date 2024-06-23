@@ -46,8 +46,11 @@ static uint64_t panic_reboot_blink_time;
 
 static const struct mipi_dbi dbi = {
     .spi = spi0,
-    //.cpol = 0, // assumed default values, may need to be changed
-    //.cpha = 0,
+    // cpol and cpha are 'clock polarity' and 'clock phase'
+    // changing these is necessary for some SPI displays to work
+    // if your display does not work try changing these
+    .cpol = 1,
+    .cpha = 1,
     .sck = 18,
     .mosi = 19,
     .cs = 17,
